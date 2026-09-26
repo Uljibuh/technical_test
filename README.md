@@ -4,6 +4,10 @@
 
 This project analyzes the human paired-end RNA-seq experiment **SRX114799** to recover immune-related information from bulk transcriptomic sequencing data.
 
+ENA dataset page:
+
+https://www.ebi.ac.uk/ena/browser/view/SRX114799
+
 The workflow includes:
 
 1. RNA-seq data acquisition and validation
@@ -26,16 +30,12 @@ Together they contain **3,511,391 paired-end fragments**.
 ```text
 technical_test/
 ├── README.md
+├── .gitignore
+├── environment.yml
 ├── data/
-│   ├── SRR396928_1.fastq.gz
-│   ├── SRR396928_2.fastq.gz
-│   ├── SRR397000_1.fastq.gz
-│   ├── SRR397000_2.fastq.gz
-│   ├── SRR397072_1.fastq.gz
-│   ├── SRR397072_2.fastq.gz
-│   ├── SRR397144_1.fastq.gz
-│   ├── SRR397144_2.fastq.gz
+│   ├── README.md
 │   └── optitype_input/
+│       └── README.md
 ├── docs/
 │   ├── step1_data_acquisition.md
 │   ├── step2_trust4_analysis.md
@@ -47,16 +47,90 @@ technical_test/
 │   ├── trust4/
 │   └── optitype/
 ├── scripts/
-│   └── 01_data_check.sh
+│   ├── 01_data_check.sh
+│   ├── 02_download_data.sh
+│   └── 03_prepare_optitype_input.sh
 └── software/
-    └── TRUST4/
 ```
+
+---
+
+## Data Availability
+
+The raw FASTQ files are **not included in this GitHub repository** because of their size.
+
+They can be downloaded from the European Nucleotide Archive using experiment accession:
+
+```text
+SRX114799
+```
+
+Dataset page:
+
+https://www.ebi.ac.uk/ena/browser/view/SRX114799
+
+The repository includes a reproducible download script:
+
+```bash
+./scripts/02_download_data.sh
+```
+
+This downloads the paired-end FASTQ files for:
+
+```text
+SRR396928
+SRR397000
+SRR397072
+SRR397144
+```
+
+into the local `data/` directory.
+
+---
+
+## Reproducing the Input Data
+
+### 1. Download the RNA-seq data
+
+```bash
+./scripts/02_download_data.sh
+```
+
+The script downloads the eight raw FASTQ files and performs gzip integrity checking.
+
+### 2. Validate the raw FASTQ files
+
+```bash
+./scripts/01_data_check.sh
+```
+
+This checks:
+
+- FASTQ file presence
+- gzip integrity
+- FASTQ line counts
+- paired R1/R2 consistency
+
+### 3. Prepare OptiType input
+
+```bash
+./scripts/03_prepare_optitype_input.sh
+```
+
+This merges the four R1 FASTQ files and four R2 FASTQ files into:
+
+```text
+data/optitype_input/SRX114799_R1.fastq.gz
+data/optitype_input/SRX114799_R2.fastq.gz
+```
+
+The merged FASTQs are also excluded from Git because they can be regenerated from the original data.
 
 ---
 
 ## Step 1 — Data Acquisition
 
-RNA-seq FASTQ files were downloaded from the European Nucleotide Archive for experiment **SRX114799**.
+RNA-seq FASTQ files were obtained from the European Nucleotide Archive for experiment **SRX114799**.
 
 All eight compressed FASTQ files passed gzip integrity checks, and R1/R2 read counts matched for all four sequencing runs.
 
@@ -152,7 +226,13 @@ The analysis used:
 - Python 3.10.8
 - macOS on Apple Silicon (`arm64`)
 
-TRUST4 was compiled from source.
+The OptiType Conda environment is recorded in:
+
+```text
+environment.yml
+```
+
+TRUST4 was compiled from source and is not included in the GitHub repository.
 
 ---
 
@@ -165,4 +245,4 @@ clonotypes.
 
 OptiType successfully inferred a complete HLA class I genotype from the same RNA-seq experiment.
 
-More detailed commands, validation steps, runtime measurements, troubleshooting, and result interpretation are provided in the files under `docs/`.
+Detailed commands, validation steps, runtime measurements, troubleshooting, and result interpretation are provided under `docs/`.
