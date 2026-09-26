@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Conda / Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+
+# Raw and derived sequencing data
+data/*.fastq.gz
+data/optitype_input/*.fastq.gz
+
+# External software checkout
+software/TRUST4/
+
+# Temporary/log artifacts
+*.tmp
+*.swp

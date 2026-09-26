@@ -1,0 +1,34 @@
+Step 2: MiXCR Installation
+
+System:
+macOS Apple Silicon (arm64)
+
+Pre-installation checks:
+- Conda version: 22.11.1
+- Homebrew: not installed
+- Java runtime: not installed
+- /usr/bin/java exists, but java -version reports no Java Runtime
+
+Attempt 1: Conda/Bioconda installation
+
+Command:
+time conda create -n mixcr_env -c bioconda -c conda-forge mixcr -y
+
+Result:
+FAILED
+
+Error:
+PackagesNotFoundError: mixcr
+
+Conda searched the osx-arm64 Bioconda and conda-forge channels but
+could not find a MiXCR package for this platform.
+
+Interpretation:
+The local computer uses Apple Silicon (ARM64). Although Bioconda
+supports macOS ARM64 generally, a compatible MiXCR package was not
+available from the channels searched.
+
+Next step:
+Investigate the official MiXCR installation method for macOS rather
+than modifying the base Conda environment or forcing an incompatible
+package.

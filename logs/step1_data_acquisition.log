@@ -1,0 +1,43 @@
+Step 1: RNA-seq Data Acquisition
+Date: September 25, 2026
+
+Dataset:
+ENA experiment SRX114799
+
+Runs identified:
+SRR396928
+SRR397000
+SRR397072
+SRR397144
+
+Files downloaded:
+8 paired-end FASTQ files (4 R1 + 4 R2)
+
+File sizes:
+Approximately 23–35 MB per compressed FASTQ file.
+
+Validation:
+gzip -t *.fastq.gz
+Result: PASS — no gzip integrity errors.
+
+Read-count validation:
+R1 and R2 counts matched for all four sequencing runs.
+
+Total read pairs:
+3,511,391
+
+Troubleshooting:
+1. Initially identified only one SRR run from the experiment page.
+   Further inspection showed that SRX114799 contains four runs.
+
+2. Copying ENA URLs through the chat interface introduced Markdown
+   formatting into some commands. The download procedure was adjusted.
+
+3. Attempted to execute ~/Downloads/ directly in zsh, resulting in
+   "permission denied". This occurred because a directory path was
+   entered as a command rather than using "cd ~/Downloads".
+
+Timing:
+Individual FASTQ downloads generally took tens of seconds.
+Exact timing was not recorded for every Step 1 command.
+Subsequent steps will use command-line timing.
